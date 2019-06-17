@@ -10,7 +10,7 @@ import matplotlib.font_manager as fm
 
 def cluster(eps, min_sample):
     # Word Vector를 Load 합니다.
-    model = Word2Vec.load("./result/embedding.model")
+    model = Word2Vec.load("./result/test.model")
 
     word_vector = model.wv.vectors
     match_index = model.wv.index2word
@@ -35,11 +35,11 @@ def cluster(eps, min_sample):
 
     print(df.groupby(["cluster"]).count())
 
-    df.to_excel(pd.ExcelWriter("./result/cluster.xlsx"), index=False)
+    df.to_excel(pd.ExcelWriter("./result/134963_cluster.xlsx"), index=False)
 
 
 def plot():
-    clstr = pd.read_excel(pd.ExcelFile("./result/cluster.xlsx"))
+    clstr = pd.read_excel(pd.ExcelFile("./result/134963_cluster.xlsx"))
     min_cluster = clstr["cluster"].min()
     max_cluster = clstr["cluster"].max()
 

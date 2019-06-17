@@ -37,13 +37,13 @@ def get_all_token(msg_txt):
 
 
 if __name__ == '__main__':
-    raw_data = pd.read_csv("./result/kko_regex.csv")
+    raw_data = pd.read_csv("./result/134963_norm.csv")
     print(raw_data.head())
     raw_data = raw_data.dropna()
 
     raw_data["token"] = raw_data["contents"].apply(lambda x: get_noun(x))
-    raw_data.to_csv("./result/noun_token.csv", index=False)
+    raw_data.to_csv("./result/134963.csv", index=False)
 
     raw_data["token"] = raw_data["contents"].apply(lambda x: get_all_token(x))
-    raw_data.to_csv("./result/all_token.csv", index=False)
+    raw_data.to_csv("./result/134963_all_token.csv", index=False)
 

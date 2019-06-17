@@ -20,16 +20,16 @@ def draw_wordcloud(kkma_result):
     # List로 되어있는 열을 Row 단위로 분리
     tokens = pd.DataFrame(kkma_result["token"].apply(lambda x: ast.literal_eval(x)).tolist())
 
-    tokens["Date"] = kkma_result["Date"]
-    tokens["Speaker"] = kkma_result["Speaker"]
-    tokens["timetype"] = kkma_result["timetype"]
-    tokens["time"] = kkma_result["time"]
+    # tokens["Date"] = kkma_result["Date"]
+    # tokens["Speaker"] = kkma_result["Speaker"]
+    # tokens["timetype"] = kkma_result["timetype"]
+    # tokens["time"] = kkma_result["time"]
     tokens["contents"] = kkma_result["contents"]
 
-    tokens = tokens.set_index(["Date", "Speaker", "timetype", "time", "contents"])
+    tokens = tokens.set_index(["contents"])
     tokens = tokens.T.unstack().dropna().reset_index()
 
-    tokens.columns = ["Date", "Person", "time_type", "time", "sntc", "index", "token"]
+    tokens.columns = ["sntc", "index", "token"]
     print(tokens.head())
 
     # 빈도수 집계
@@ -49,9 +49,13 @@ def draw_wordcloud(kkma_result):
     plt.imshow(wc)
     plt.axis("off")
     plt.show()
+    df = pd.DataFrame(data=summary)
+    df.to_csv("./result/summary.csv", sep='\t', encoding='utf-8')
+
+    # df.to_excel(pd.ExcelWriter("./result/summary.xlsx"), index=False)
 
 
 if __name__ == '__main__':
-    kkma_result = pd.read_csv("./result/noun_token.csv")
+    kkma_result = pd.read_csv("./result/134963_all_token.csv")
     draw_wordcloud(kkma_result)
 
